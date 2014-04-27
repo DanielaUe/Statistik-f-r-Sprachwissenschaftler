@@ -1,7 +1,7 @@
 # Hausaufgabe 03
 # Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
 # 2014-04-24
-# Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+# Diese Datei dient nur Prüfungszwecken..
 
 # Sie sollten die Datei auch in Ihren Ordner kopieren und einen Commit machen, 
 # bevor Sie die Kopie weiter anpassen! Vergessen Sie dabei nicht, Namen, Datum
@@ -95,8 +95,9 @@ tabelle.rel <- tabelle / total
 print(tabelle.rel)
 
 # Vervollständigen Sie folgende Zeile, sodass Prozentwerte aus den relativen
-# Häufigkeiten entst ehen: tabelle.prozent <- tabelle.rel code_hier 
-# print(tabelle.prozent)
+# Häufigkeiten entst ehen: 
+tabelle.prozent <- tabelle.rel*100 
+print(tabelle.prozent)
 
 # Aber die Frage bleibt, wie berechnen wir den Modus? Durch sortieren!
 tabelle.sorted <- sort(tabelle,decreasing=TRUE)
@@ -108,13 +109,15 @@ print(tabelle.sorted)
 
 # Nehmen Sie das erste Element aus dem obigen Ergebnis, um den Modalwert zu
 # bekommen:
-# modus <- code_hier
+modus <- (tabelle.sorted)
+names(which.max(tabelle.sorted))
+
 
 # Verständisfrage: gibt es immer nur *einen* Modalwert? 
 # Wenn nicht, ist der Code oben korrekt? Warum?
 # Schreiben Sie Ihre Antwort als Comment hier.
 
-# Nein, es können mehrere Zahlen gleich oft vorkommen
+# Nein, es können mehrere Zahlen gleich oft vorkommen. Wenn 2 Werte gleichzeitig auftreten, werden 2 Werte ausgegeben
 
 # Als Abscheid ein Beispiel mit der Darstellung Frequenzdaten mit Säulendiagramm
 # bzw. Histogramm
