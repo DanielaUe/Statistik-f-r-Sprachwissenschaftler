@@ -136,16 +136,36 @@ print(speech)
 # HINT: Formel und Beispiel für die Berechnung auf den Folien!
 x <- (klinisch$height)
 abweichung.klinisch <- x - mean (x)
-quadr.abweichun.klinisch <- abweichung.klinisch^2
+quadr.abweichung.klinisch <- abweichung.klinisch^2
 varianz.x <- mean (quadr.abweichung.klinisch)
-print (varianz.x)
+varianz.x
+# Die Varianz für den Studiengang klinische Linguistik beträgt ungefähr 30,9
 klinisch.sd <- sqrt (varianz.x)
-print (klinisch.sd)
-klinisch.sd <- 
-linkk.sd <- CODE_HIER
-speech.sd <- CODE_HIER
+klinisch.sd
+# Die Standardabweichung beträgt somit ungefähr 5,6
+
+y <- (linkk$height)
+abweichung.linkk <- y - mean (y)
+quadr.abweichung.linkk <- abweichung.linkk^2
+varianz.y <- mean (quadr.abweichung.linkk)
+varianz.y
+# Die Varianz für den Studiengang Kognition und Kommunikation beträgt 9,25
+linkk.sd <- sqrt (varianz.y)
+linkk.sd
+# Die Standardabweichung beträgt somit ungefähr 3,04
+
+z <- (speech$height)
+abweichung.speech <- z - mean(z)
+quadr.abweichung.speech <- abweichung.speech^2
+varianz.z <- mean (quadr.abweichung.speech)
+varianz.z
+# Die Varianz für den Studiengang Speech Science beträgt ungefähr 12,2
+speech.sd <- sqrt (varianz.z)
+speech.sd
+# Die Standardabweichung beträgt somit ungefähr 3,5
 
 # Berichten Sie jetzt die Mittelwerte und Standardabweichungen für die drei Gruppen. Die erste Gruppe steht hier als Muster:
-#print( paste("Studiengang: Klinische Linguistik","Mean:",mean(klinisch$height),"SD:",klinisch.sd) )
-CODE_HIER
+print( paste("Studiengang: Klinische Linguistik","Mean:",mean(klinisch$height),"SD:",klinisch.sd) )
+print( paste("Studiengang: Linguistik Kognition und Kommunikation", "Mean:",mean(linkk$height), "SD:",linkk.sd) )
+print( paste("Studiengang: Speech Science", "Mean:",mean(speech$height), "SD:",speech.sd) )
 
