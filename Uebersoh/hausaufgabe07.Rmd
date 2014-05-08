@@ -1,6 +1,6 @@
 % Hausaufgabe 07
-% Phillip Alday <phillip.alday@staff.uni-marburg.de>
-% 2014-05-07
+% Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
+% 2014-05-08
 
 Falls die Umlaute in dieser und anderen Dateien nicht korrekt dargestellt werden, sollten Sie File > Reopen with Encoding > UTF-8 sofort machen (und auf jeden Fall ohne davor zu speichern), damit die Enkodierung korrekt erkannt wird! 
 
@@ -61,7 +61,7 @@ ggplot(data=noten.dist,aes(x=Notenpunkte,y=P,color=Standardabweichung)) + geom_l
 ```
 Ich habe die Grenzen der Grafik ein bisschen breiter gestellt, sodass man die Endpunkte klar sieht und Sie auch einen weiteren `ggplot`-Befehl kennen lernen. 
 
-Welche Verteilung sieht am fairsten aus? Warum?
+Welche Verteilung sieht am fairsten aus? Warum? Rot (also drei), weil die Wahrscheinlichkeit für Durchfallen niedrig ist (niedriger als bei den anderen Standardabweichungen), dafür aber natürlich auch die Wahrscheinlichkeit für eine gute Punktzahl nicht so hoch. Bei den anderen Standardabweichungen sind die Kurven flacher, aber auch die Wahrscheinlichkeiten für die jeweiligen Endpunkte höher, also nicht besonders fair, wenn viele durchfallen.
 
 Wir können das konkreter machen: welcher Anteil der Studenten bekommt bei den jeweiligen Verteilungen eine 1 (zumindest 13 NP)? Für die Verteilung mit $\sigma = 3$ sieht die Berechnung mit R so aus:
 ```{r}
@@ -84,15 +84,19 @@ for(s in c(3,4,5) ){
 
 Aber wir hoffen alle, dass wir doch eine gute Note bekommen. Fügen Sie einen Code-Block hier ein, der das gleiche aber mit "ausgezeichneten" Noten (=1 bzw. >= 13) macht. (Bei evtl. Copy-Paste nicht vergessen, "fallen...durch" durch etwas Passendes zu ersetzen!)  
 
-code_block_hier
+pnorm(13, mean=mu, sd=3, lower.tail=FALSE)
+for(s in c(3,4,5) ){
+  bestehen.ausgezeichnet <- pnorm(13,mean=mu,sd=s,lower.tail=FALSE)
+  output <- paste("Bei einer Standabweichung von",s, "bestehen",bestehen.ausgezeichnet*100,"% ausgezeichnet.")
+  print(output)
+}
+
 
 Wie steht die Anzahl guter Noten in Beziehung zur Anzahl schlechter Noten? 
-
-antwort_hier
+Es gibt eine viel schlechtere Wahrscheinlichkeit für die guten Noten (5, 11 und 16 %) als für die schlechten
 
 Warum?
 
-antwort_hier
 
 ## Kurtosis und Schiefe
 Kurtosis (im Deutschen auch *Wölbung*) ist ein Maß dafür, wie spitz eine Verteilung ist. Die Normalverteilung wird nie zu extrem spitz -- der Gipfel bleibt immer schön rund, obwohl er manchmal eng wird. Andere Verteilungen (z.B. die Laplace-Verteilung ) haben Gipfel, die nicht rund sind.   
@@ -100,8 +104,7 @@ Kurtosis (im Deutschen auch *Wölbung*) ist ein Maß dafür, wie spitz eine Vert
 Schiefe (*skewness*) beschriebt die (A)Symmetrie einer Verteilung. Eine Verteilung ist *linksschief*, wenn die linke Seite "breiter" ist, d.h., wenn sich der "Gipfel" auf der rechten Seite befindet.  Eine Verteilung ist *rechtsschief*, wenn die rechte Seite "breiter" ist, d.h., wenn sich der "Gipfel" auf der linken Seite befindet 
 
 Die Verteilung von Noten ist oft schief mit mehr guten Noten. Ist die Verteilung rechts- oder linksschief?
-
-antwort_hier
+Bei der Verteilung der Notenpunkte (0-15) liegt der Gipfel für gute Noten rechts und es ist deshalb linksschief.
 
 Vielleicht hilft folgende Grafik mit der Visualisierung:
 
@@ -120,23 +123,28 @@ noten.dist
 
 Jetzt können wir die absoluten Häufigkeiten auch plotten:
 
-code_block_hier
+ggplot(data=noten.dist,aes(x=Notenpunkte,y=Anzahl,color=Standardabweichung)) + geom_line() + scale_x_continuous(limits=c(0,16))
+abs.haeufigkeit <- qplot(x="Notenpunkte",y=Anzahl,data=noten.dist,color=Standardabweichung)
+abs.haeufigkeit
 
 Beantworten Sie ein paar Fragen über die Verteilung, indem Sie den passenden R-Code einsetzen:
 
 1. Wie viele Studenten bekommen zwischen 7 und 9 NP bei einer Standardabweichung von 3?
 
-    `r (pnorm(9,mean=mu,sd=3) - pnorm(7,mean=mu,sd=3) ) * n` Studenten bekommen zwischen 7 und 9 Notenpunkten. 
+(pnorm(9,mean=mu,sd=3) - pnorm(7,mean=mu,sd=3) ) * n
+13 Studenten bekommen zwischen 7 und 9 Notenpunkten. 
     
     Wichtig: bei Wahrscheinlichkeits- und Häufigkeitsverteilung ist der linke Rand inklusiv aber der rechte Rand exklusiv! Das heißt, wir zählen hiermit die Leute, die bis zu 9 NP bekommen haben aber nicht die, die tatsächlich 9 NP bekommen haben!
 
 2. Wie viele Studenten bekommen zumindest 10 NP?
 
-    `code_hier` Studenten bekommen zumindest 10 Notenpunkte.
+  (pnorm(15,mean=mu,sd=3) - pnorm(10, mean=mu, sd=3)) * n 
+    12 Studenten bekommen zumindest 10 Notenpunkte.
 
 3. Wie viele Studenten bekommen weniger als 10 NP?
 
-    `code_hier` Studenten bekommen weniger als 10 Notenpunkte.
+  (1 - (pnorm(15,mean=mu,sd=3) - pnorm(10, mean=mu, sd=3))) * n
+    37,9 Studenten bekommen weniger als 10 Notenpunkte.
 
 4. Wie viele Studenten bekommen weniger als 8 NP?
 
@@ -149,20 +157,26 @@ Beantworten Sie ein paar Fragen über die Verteilung, indem Sie den passenden R-
 Manchmal will man in die andere Richtung gehen -- z.B. um die Frage beantworten zu können, welche Note man erreichen muss, um überdurchschnittlich zu sein. Dafür haben wir `qnorm()`. Überdurchschnittlich heißt "besser als die Hälfte abscheiden" (duh!) und wir nehmen wieder an, dass die Standardabweichung gleich 3 ist. Dann haben wir die Aussage:
 
 Um überdurchschnittlich zu sein, muss man mehr als `r qnorm(0.5,mean=mu,sd=3)` Notenpunkte bekommen. 
+qnorm(0.5,mean=mu,sd=3)
+mehr als 8 Notenpunkte
 
 Nicht so überraschend, dass "überdurchschnittlich" auch "mehr Punkte als den Durchschnitt bekommen" heißt! Wie sieht es aus, wenn wir besser als 99% der anderen abschließen möchten?
 
-Um in dem besten 1% abzuschließen, muss man zumindest `code_hier` Notenpunkte bekommen.
+Um in dem besten 1% abzuschließen, muss man zumindest
+qnorm(0.99,mean=mu,sd=3) 
+14,98 Notenpunkte bekommen.
 
 ## z-Transformation
 Bei der Überprüfung der Lehrqualität scheint es der Verwaltung, dass ein gewisser Dozent andere Noten als andere Dozenten vergibt. Es wird entschieden, dass der Notenspiegel bei den Teilnehmern in einem von seinen Kursen getestet wird, um zu schauen, ob er sich von signifikant von der idealisierten Notenverteilung ($\mu=8,\sigma=3$) unterscheidet. Um zu zeigen, dass Gott $\alpha=0.06$ so viel liebt wie $\alpha=0.05$ `r citep("10.1037/0003-066X.44.10.1276")`, setzt die Verwaltung das Signikanzniveau auf 0.06. 
 
-Der kritische Wert für einen einseitigen $z$-Test ist `code_hier`.
+Der kritische Wert für einen einseitigen $z$-Test ist 1,644854.
+qnorm(0.95)
 
-Die kritischen Werte für einen zweiseitigen $z$-Test sind $\pm$`code_hier`.
+Die kritischen Werte für einen zweiseitigen $z$-Test sind $\pm$ 1,959964.
+qnorm(0.975)
 
 ### Gibt es einen Unterschied?
-Bei diesem Dozenten ist die Verwaltung wirklich unsicher, ob und was für einen Unterschied es geben könnte. (Welche Testart sollte man hier nutzen?)
+Bei diesem Dozenten ist die Verwaltung wirklich unsicher, ob und was für einen Unterschied es geben könnte. (Welche Testart sollte man hier nutzen?) Zweiseitigen z-Test, um in beide Richtungen gucken zu können
 
 In einem kleinen Seminar mit 7 Studenten beträgt der Durchschnittswert 10. Unterscheidet sich der Notenspiegel von dem idealen? Berechnen Sie den $z$-Test:
 
@@ -207,4 +221,4 @@ bibliography()
 
 
 # Lizenz
-Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+Diese Datei dient nur Prüfungszwecken.
