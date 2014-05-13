@@ -240,7 +240,7 @@ z
 
 Es gibt einen signifikanten Unterschied, da der Betrag von -1,67=1,67 > als 1,55 (also H1 annehmen).
 
-Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied. 
+Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied.
 
 ## Zum Überlegen
 Gibt es einen Grund, weshalb die Noten normal verteilt sein sollten? Warum ist das die übliche Annahme?
