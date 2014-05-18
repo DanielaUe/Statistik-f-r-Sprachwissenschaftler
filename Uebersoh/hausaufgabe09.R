@@ -189,3 +189,4 @@ if (shapiro2$p.value > 0.05){
 
 welch <- t.test(rt[rt$subj==1,"logRT"],rt[rt$subj==2,"logRT"])
 welch
+
