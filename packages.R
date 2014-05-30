@@ -6,6 +6,12 @@ packages.used <- c("knitr","knitcitations"
                    ,"reshape"
                    ,"sn"
                    ,"car"
+                   ,"shiny"
+                   ,"scales"
+                   ,"gridExtra"
+                   ,"zoo"
+                   ,"xtable"
+                   ,"ez"
                    )
 
 install.packages(packages.used,dependencies = TRUE)
