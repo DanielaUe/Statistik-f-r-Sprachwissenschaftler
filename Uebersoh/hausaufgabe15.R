@@ -38,14 +38,17 @@
 library(ggplot2)
 
 # und danach die Daten:
-body <- read.table("Data/body_dim_long.tab",header=TRUE) 
+body <- read.table("Data/body_dim_long.tab",header=TRUE)
+data(women)
 
 # Wir werden auch den Datensatz women nutzen, der schon mit R geliefert wird.
 # Mehr Information zum Datensatz bekommen Sie mit ?women. Die Angaben sind in
 # US-Einheiten, weshalb wir eine Kopie mit den SI-Einheiten machen.
 women.metric <- women
 women.metric$height.cm <- women.metric$height * 2.54 # 2.54 cm pro inch
+print(women.metric$height.cm)
 women.metric$weight.kg <- women.metric$weight / 2.2 # 2.2 lb pro kg
+print(women.metric$weight.kg)
 
 # Plotten wir erst mal die Daten in US-Einheiten. Die Bestimmung des
 # method-Parameters ist sehr wichtig: bei so wenigen Datenpunkten ist der
@@ -62,7 +65,7 @@ ggplot(women.metric,aes(x=height.cm,y=weight.kg)) +  geom_point() + geom_smooth(
 m2 <- lm(weight.kg ~ height.cm, data=women.metric)
 print(summary(m2))
 
-# Sehen die Plots anders aus? Hat sich der R^2 Wert geändert? Die t-Werte? Die Koeffizienten? 
+# Sehen die Plots anders aus? Hat sich der R^2 Wert geändert? Die t-Werte? Die Koeffizienten? Nein, es ändert sich nichts
 
 # Was passiert, wenn wir das Modell umdrehen? Also, height.cm als eine Funktion
 # von weight.kg darstellen? Plotten und berechnen Sie das neue Modell, wie ich
@@ -72,6 +75,9 @@ print(summary(m2))
 ggplot(women.metric,aes(x=weight.kg,y=height.cm)) +  geom_point() + geom_smooth(method="lm")
 m3 <- lm(height.cm ~ weight.kg, data=women.metric)
 print(summary(m3))
+ggplot(women.metric,aes(x=weight,y=height)) +  geom_point() + geom_smooth(method="lm")
+m4 <- lm(height ~ weight, data=women.metric)
+print(summary(m4))
 
 # Hat sich der R^2 Wert geändert? Die t-Werte? Die Koeffizienten? Was ist die
 # Beziehung zwischen diesem Modell und m2?
@@ -80,7 +86,10 @@ print(summary(m3))
 # Sie ein Modell für das Gewicht der Teilnehmer als Funktion von Körpergröße.
 
 # CODE_HIER
-
+ggplot(body,aes(x=height,y=weight)) +  geom_point() + geom_smooth(method="lm")
+m5 <- lm(weight ~ height, data=body)
+print(summary(m5))
 
 # Warum funktioniert die Regression besser beim Datensatz "women" als bei den
 # Kursteilnehmerdaten? HINT: Lesen Sie die Hilfe-Beschreibung von women! 
+# In unserem Datensatz komplett zufällige Daten, im amerikanischen Datensatz sind die Daten schon Mittelwerte.
