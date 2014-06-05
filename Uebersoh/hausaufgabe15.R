@@ -1,7 +1,7 @@
 # Hausaufgabe 15
-# Phillip Alday <phillip.alday@staff.uni-marburg.de>
-# 2014-06-04
-# Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+# Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
+# 2014-06-05
+# Diese Datei dient nur Prüfungszwecken.
 
 
 # Die nächsten Punkte sollten langsam automatisch sein...
