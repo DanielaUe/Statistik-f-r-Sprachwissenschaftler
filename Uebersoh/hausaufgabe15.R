@@ -1,6 +1,7 @@
 # Hausaufgabe 15
 # Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
 # 2014-06-05
+# 2014-06-06
 # Diese Datei dient nur Prüfungszwecken.
 
 
@@ -39,7 +40,7 @@ library(ggplot2)
 
 # und danach die Daten:
 body <- read.table("Data/body_dim_long.tab",header=TRUE)
-
+data(women)
 
 # Wir werden auch den Datensatz women nutzen, der schon mit R geliefert wird.
 # Mehr Information zum Datensatz bekommen Sie mit ?women. Die Angaben sind in
