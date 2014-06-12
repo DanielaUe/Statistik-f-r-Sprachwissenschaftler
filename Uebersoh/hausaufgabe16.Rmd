@@ -1,6 +1,6 @@
 % Hausaufgabe 16
-% Phillip Alday <phillip.alday@staff.uni-marburg.de>
-% 2014-06-11
+% Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
+% 2014-06-12
 
 Falls die Umlaute in dieser und anderen Dateien nicht korrekt dargestellt werden, sollten Sie File > Reopen with Encoding > UTF-8 sofort machen (und auf jeden Fall ohne davor zu speichern), damit die Enkodierung korrekt erkannt wird! 
 
@@ -62,4 +62,4 @@ ggplot(diamonds,aes(x=carat,y=price,color=color)) + geom_point() + facet_wrap(~c
 Haben Sie dabei explorativ oder konfirmativ gearbeitet? Was hat das für eine Auswirkung auf die Interpretation der Ergebnisse?
 
 # Lizenz
-Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+Diese Datei dient nur Prüfungszwecken.
