@@ -45,6 +45,30 @@ Mögliche Ausgangsfragen sind unter anderem:
 * Gibt es einen Zusammenhang zwischen Farbe und Klarheit? Zwischen Farbe und Carat? Zwischen Farbe und Tiefe?
 * ...
 
+Zu: Was bestimmt den Preis eines Diamenten?
+Abhängige Variable: Price
+Unabhängige: Carat, Cut,...
+anova1<-aov(price~carat, data=diamonds)
+summary(anova1)
+anova2<-aov(price~cut, data=diamonds)
+summary(anova2)
+anova3<-aov(price~color, data=diamonds)
+summary(anova3)
+anova4<-aov(price~clarity, data=diamonds)
+summary(anova4)
+anova5<-aov(price~x, data=diamonds)
+summary(anova5)
+
+anovaMehrf<-aov(price~carat+cut+color+clarity+x+y+z+depth+table, data=diamonds)
+summary(anovaMehrf)
+#geht nicht oder?
+ezANOVA(data=diamonds, dv=.(price), wid=.(carat), within=.())
+
+
+Zu: Hat Farbe oder Klarheit Auswirkung auf Gewicht oder nur Volumen?
+anovaMehrfak<-aov(carat~color * clarity, data=diamonds)
+summary(anovaMehrfak)
+
 *Vergessen Sie dabei nicht, dass wir bisher nur Methoden gelernt haben, wo die abhängige Variable zumindest intervallskaliert ist!*
 
 Sie können sich auch [das *ggplot* Buch](http://dx.doi.org/10.1007/978-0-387-98141-3) zur Inspiration anschauen, v.a. Abbildungen 4.7, 4.8, 4.9, 5.2, 5.3, 5.4, 5.6, 5.14, 7.16, 9.1  und Kapitel 2.2-2.5 könnten inspirierend wirken. Den Code zur Erstellung der Figuren findet man immer im Haupttext.
