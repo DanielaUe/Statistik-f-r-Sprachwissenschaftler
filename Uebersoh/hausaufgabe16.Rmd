@@ -53,27 +53,43 @@ Mögliche Ausgangsfragen sind unter anderem:
 cut.ordinal<-as.numeric(diamonds$cut)
 color.ordinal<-as.numeric(diamonds$color)
 #Grafisch dargestellt:
-ggplot(data=diamonds) + geom_density(aes(x=price,y=carat,color=color),alpha=0.3)
-ggplot(diamonds,aes(x=carat,y=price,color=price)) + geom_density()
+ggplot(diamonds,aes(x=carat,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=cut.ordinal,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=color.ordinal,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=clarity,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=x,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=y,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=z,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=depth,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=table,y=price)) + geom_point(alpha=0.3)
 #Analyse (es geht keine ezANOVA, weil wir keine Messwiederholung haben):
 #Abhängige Variable: Price
 #Unabhängige: Carat, cut, color, clarity, x, y, z, depth, table
 anova1<-aov(price~carat, data=diamonds)
 summary(anova1)
-anova2<-aov(price~cut, data=diamonds)
+anova2<-aov(price~cut.ordinal, data=diamonds)
 summary(anova2)
-anova3<-aov(price~color, data=diamonds)
+anova3<-aov(price~color.ordinal, data=diamonds)
 summary(anova3)
 anova4<-aov(price~clarity, data=diamonds)
 summary(anova4)
 anova5<-aov(price~x, data=diamonds)
 summary(anova5)
+anova6<-aov(price~y, data=diamonds)
+summary(anova6)
+anova7<-aov(price~z, data=diamonds)
+summary(anova7)
+anova8<-aov(price~depth, data=diamonds)
+summary(anova8)
+anova9<-aov(price~table, data=diamonds)
+summary(anova9)
 
-anovaMehrf<-aov(price~carat+cut+color+clarity+x+y+z+depth+table, data=diamonds)
+anovaMehrf<-aov(price~carat+cut.ordinal+color.ordinal+clarity+x+y+z+depth+table, data=diamonds)
 summary(anovaMehrf)
 
 #Anschlussfrage:
-lm(price~carat, data=diamonds)
+#Wenn wir einen sehr hohen Caratwert hätten, wie hoch wäre dann der Preis?
+ggplot(diamonds,aes(x=carat,y=price)) + geom_point() + scale_x_continuous(limits=c(0,25)) + geom_smooth(method="lm")
 
 *Vergessen Sie dabei nicht, dass wir bisher nur Methoden gelernt haben, wo die abhängige Variable zumindest intervallskaliert ist!*
 
