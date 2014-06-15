@@ -1,6 +1,7 @@
 % Hausaufgabe 16
 % Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
 % 2014-06-12
+% 2014-06-15
 
 Falls die Umlaute in dieser und anderen Dateien nicht korrekt dargestellt werden, sollten Sie File > Reopen with Encoding > UTF-8 sofort machen (und auf jeden Fall ohne davor zu speichern), damit die Enkodierung korrekt erkannt wird! 
 
@@ -45,9 +46,18 @@ Mögliche Ausgangsfragen sind unter anderem:
 * Gibt es einen Zusammenhang zwischen Farbe und Klarheit? Zwischen Farbe und Carat? Zwischen Farbe und Tiefe?
 * ...
 
-Zu: Was bestimmt den Preis eines Diamenten?
-Abhängige Variable: Price
-Unabhängige: Carat, Cut,...
+#Ausgangsfrage: Was bestimmt den Preis eines Diamanten?
+#Voraussetzungen:
+#Teilstichproben unabhängig (nehme ich an), AV intervallskaliert (Preis ist intervallskaliert), n<30 AV normalverteilt (Stichprobe ist viel größer, also normalverteilt), Varianzen innerhalb homogen (nehme ich an)
+#Umbenennen:
+cut.ordinal<-as.numeric(diamonds$cut)
+color.ordinal<-as.numeric(diamonds$color)
+#Grafisch dargestellt:
+ggplot(data=diamonds) + geom_density(aes(x=price,y=carat,color=color),alpha=0.3)
+ggplot(diamonds,aes(x=carat,y=price,color=price)) + geom_density()
+#Analyse (es geht keine ezANOVA, weil wir keine Messwiederholung haben):
+#Abhängige Variable: Price
+#Unabhängige: Carat, cut, color, clarity, x, y, z, depth, table
 anova1<-aov(price~carat, data=diamonds)
 summary(anova1)
 anova2<-aov(price~cut, data=diamonds)
@@ -61,13 +71,9 @@ summary(anova5)
 
 anovaMehrf<-aov(price~carat+cut+color+clarity+x+y+z+depth+table, data=diamonds)
 summary(anovaMehrf)
-#geht nicht oder?
-ezANOVA(data=diamonds, dv=.(price), wid=.(carat), within=.())
 
-
-Zu: Hat Farbe oder Klarheit Auswirkung auf Gewicht oder nur Volumen?
-anovaMehrfak<-aov(carat~color * clarity, data=diamonds)
-summary(anovaMehrfak)
+#Anschlussfrage:
+lm(price~carat, data=diamonds)
 
 *Vergessen Sie dabei nicht, dass wir bisher nur Methoden gelernt haben, wo die abhängige Variable zumindest intervallskaliert ist!*
 
