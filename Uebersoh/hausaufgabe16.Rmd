@@ -49,27 +49,35 @@ Mögliche Ausgangsfragen sind unter anderem:
 #Ausgangsfrage: Was bestimmt den Preis eines Diamanten?
 #Voraussetzungen:
 #Teilstichproben unabhängig (nehme ich an), AV intervallskaliert (Preis ist intervallskaliert), n<30 AV normalverteilt (Stichprobe ist viel größer, also normalverteilt), Varianzen innerhalb homogen (nehme ich an)
-#Umbenennen:
-cut.ordinal<-as.numeric(diamonds$cut)
-color.ordinal<-as.numeric(diamonds$color)
 #Grafisch dargestellt:
 ggplot(diamonds,aes(x=carat,y=price)) + geom_point(alpha=0.3)
-ggplot(diamonds,aes(x=cut.ordinal,y=price)) + geom_point(alpha=0.3)
-ggplot(diamonds,aes(x=color.ordinal,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=cut,y=price)) + geom_point(alpha=0.3)
+ggplot(diamonds,aes(x=color,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=clarity,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=x,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=y,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=z,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=depth,y=price)) + geom_point(alpha=0.3)
 ggplot(diamonds,aes(x=table,y=price)) + geom_point(alpha=0.3)
+#oder mit Jitter (Ich weiß nicht, wieso es mit z.B. density nicht funktioniert)
+ggplot(data=diamonds)+ geom_jitter(aes(x=carat, y=price, color=carat, fill=carat),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=cut, y=price, color=cut, fill=cut),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=color, y=price, color=color, fill=color),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=clarity, y=price, color=clarity, fill=clarity),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=x, y=price, color=x, fill=x),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=y, y=price, color=y, fill=y),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=z, y=price, color=z, fill=z),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=depth, y=price, color=depth, fill=depth),alpha=0.3)
+ggplot(data=diamonds)+ geom_jitter(aes(x=table, y=price, color=table, fill=table),alpha=0.3)
 #Analyse (es geht keine ezANOVA, weil wir keine Messwiederholung haben):
 #Abhängige Variable: Price
 #Unabhängige: Carat, cut, color, clarity, x, y, z, depth, table
+#Einfaktorielle ANOVA:
 anova1<-aov(price~carat, data=diamonds)
 summary(anova1)
-anova2<-aov(price~cut.ordinal, data=diamonds)
+anova2<-aov(price~cut, data=diamonds)
 summary(anova2)
-anova3<-aov(price~color.ordinal, data=diamonds)
+anova3<-aov(price~color, data=diamonds)
 summary(anova3)
 anova4<-aov(price~clarity, data=diamonds)
 summary(anova4)
@@ -83,13 +91,32 @@ anova8<-aov(price~depth, data=diamonds)
 summary(anova8)
 anova9<-aov(price~table, data=diamonds)
 summary(anova9)
-
-anovaMehrf<-aov(price~carat+cut.ordinal+color.ordinal+clarity+x+y+z+depth+table, data=diamonds)
+#Mehrfaktorielle ANOVA:
+anovaMehrf<-aov(price~carat+cut+color+clarity+x+y+z+depth+table, data=diamonds)
 summary(anovaMehrf)
+#nur y ist nicht signifikant
+
+#Interaktionen:
+summary(aov(price~carat * x * y * z,data=diamonds))
+#Bis auf carat:z alles signifikante Interaktionen
 
 #Anschlussfrage:
+#Lineare Regressionen: (cut, clarity und color gehen nicht weil nicht intervallskaliert)
+summary(lm(price~carat,data=diamonds))
+summary(lm(price~x,data=diamonds))
+summary(lm(price~y,data=diamonds))
+summary(lm(price~z,data=diamonds))
+summary(lm(price~depth,data=diamonds))
+summary(lm(price~table,data=diamonds))
+#Wenn R^2 nah an 1, wird viel Varianz erklärt, also bei Carat, x, y, z aber bei depth und table nicht
+
 #Wenn wir einen sehr hohen Caratwert hätten, wie hoch wäre dann der Preis?
 ggplot(diamonds,aes(x=carat,y=price)) + geom_point() + scale_x_continuous(limits=c(0,25)) + geom_smooth(method="lm")
+#Wie teuer wäre ein Diamant, der 5000 Karat hat?
+Dollar.5000Karat <- -2256.36 + 7756.43*5000
+Dollar.5000Karat
+#38779894 Dollar
+
 
 *Vergessen Sie dabei nicht, dass wir bisher nur Methoden gelernt haben, wo die abhängige Variable zumindest intervallskaliert ist!*
 
