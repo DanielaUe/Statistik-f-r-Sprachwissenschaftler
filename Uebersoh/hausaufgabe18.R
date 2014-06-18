@@ -1,7 +1,7 @@
 # Hausaufgabe 18
-# Phillip Alday <phillip.alday@staff.uni-marburg.de>
-# 2014-06-17
-# Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
+# Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
+# 2014-06-18
+# Diese Datei dient nur Prüfungszwecken.
 
 
 # Die nächsten Punkte sollten ziemlich automatisch sein...
@@ -45,8 +45,8 @@ y = x1 + x2
 linreg <- data.frame(x1,x2,y)
 
 # Wir können y ~ x1 und y ~ x2 einzel plotten:
-# ggplot(linreg,aes(x=x1,y=y)) + geom_point() + geom_smooth(method="lm")
-# ggplot(linreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
+ggplot(linreg,aes(x=x1,y=y)) + geom_point() + geom_smooth(method="lm")
+ggplot(linreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
 
 # Die Linie passt sehr gut zu den Punkten, was wir hätten erwarten sollen, denn
 # wir haben y aus einfachen Summen von x1 und x2 berechnet. Wir berechnen
