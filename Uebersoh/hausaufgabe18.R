@@ -53,9 +53,9 @@ ggplot(linreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
 # wir haben y aus einfachen Summen von x1 und x2 berechnet. Wir berechnen
 # zunächst die lineare Regression für die einzelnen unabhängige Variablen.
 
-lm (x2~x1)
+lm (y~x1)
 
-lm (x1~x2)
+lm (y~x2)
 
 # Was haben Sie für Koeffizeinten bekommen? Wenn wir daran denken, dass x2 = 2*x1 ist, wissen wir, dass 
 # y = x1 + x2
@@ -109,20 +109,18 @@ ggplot(pyreg,aes(x=x2,y=y)) + geom_point() + geom_smooth(method="lm")
 
 # Berechnen Sie die zwei Regressionsmodelle für y ~ x1 und y ~ x2
 
-#data=pyreg oder linreg?
 model3 <- lm(y ~ x1, data=pyreg)
 model3.summary <- summary(model3)
 print(model3.summary)
 
-model4 <- lm(y ~ x2, data=linreg)
+model4 <- lm(y ~ x2, data=pyreg)
 model4.summary <- summary(model4)
 print(model4.summary)
 
 # Bevor Sie die Regression y ~ x1 + x2 berechnen, schauen Sie sich die
 # Korrelation (mit Konfidenzintervall!) zwischen x1 und x2 an:
 
-cor.test(x1,x2,method="kendall")
-#CI??
+cor.test(x1,x2,method="pearson")
 
 # Wenn Sie nicht miteinander signifikant korreliert sind, sollten Sie auch die
 # Regression y ~ x1 + x2 berechnen:
@@ -136,7 +134,6 @@ cor.test(x1,x2,method="kendall")
 # dass y im linearen Verhältnis zu x1 und x2 steht? Machen Sie eine Grafik wie
 # oben für y ~ x1 + x2, **nachdem Sie sich eine Antwort überlegt haben**.
 
-#richtig??
 ggplot(pyreg,aes(x=x1,y=x2)) + geom_point(aes(size=y))
 
 # Glauben Sie jetzt, dass y im linearen Verhältnis zu x1 und x2 steht? Warum (nicht)?
@@ -144,12 +141,11 @@ ggplot(pyreg,aes(x=x1,y=x2)) + geom_point(aes(size=y))
 # Wie sieht mit Korrelationen aus? Berechnen Sie die Korrelation (sowohl Pearson
 # als auch Spearman) zwischen (y und x1) sowie auch zwischen (y und x2). 
 
-#richtig??
-cor(pyreg$y,pyreg$x1,method="pearson")
-cor(pyreg$y,pyreg$x1,method="spearman")
+cor.test(pyreg$y,pyreg$x1,method="pearson")
+cor.test(pyreg$y,pyreg$x1,method="spearman")
 
-cor(pyreg$y,pyreg$x2,method="pearson")
-cor(pyreg$y,pyreg$x2,method="spearman")
+cor.test(pyreg$y,pyreg$x2,method="pearson")
+cor.test(pyreg$y,pyreg$x2,method="spearman")
 
 # Welche Art von Korrelation macht am meisten Sinn bei diesen Daten?
 
