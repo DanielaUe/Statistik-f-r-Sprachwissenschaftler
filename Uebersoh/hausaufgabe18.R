@@ -1,7 +1,7 @@
 # Hausaufgabe 18
 # Daniela Uebersohn <Uebersoh@students.uni-marburg.de>
 # 2014-06-18
-# 2014-06-20
+# 2014-06-21
 # Diese Datei dient nur Prüfungszwecken.
 
 
@@ -120,13 +120,14 @@ print(model4.summary)
 # Bevor Sie die Regression y ~ x1 + x2 berechnen, schauen Sie sich die
 # Korrelation (mit Konfidenzintervall!) zwischen x1 und x2 an:
 
-cor.test(x1,x2,method="pearson")
+cor.test(pyreg$x1,pyreg$x2,method="pearson")
 
 # Wenn Sie nicht miteinander signifikant korreliert sind, sollten Sie auch die
 # Regression y ~ x1 + x2 berechnen:
 
-# CODE_HIER
-# korreliert doch signifikant, oder?
+model5 <- lm(y ~ x1 + x2, data=pyreg)
+model5.summary <- summary(model5)
+print(model5.summary)
 
 
 # Wie gut passt das lineare Modell zu den Daten? Schauen Sie sich die R^2 und 
