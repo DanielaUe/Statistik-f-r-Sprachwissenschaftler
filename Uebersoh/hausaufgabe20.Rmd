@@ -12,6 +12,7 @@ library(lme4)
 suppressPackageStartupMessages(library(knitcitations))
 ```
 
+
 # Die nächsten Punkte sollten beinahe automatisch sein...
 1. Kopieren Sie diese Datei in Ihren Ordner (das können Sie innerhalb RStudio machen oder mit Explorer/Finder/usw.) und öffnen Sie die Kopie. Ab diesem Punkt arbeiten Sie mit der Kopie. Die Kopie bitte `hausaufgabe20.Rmd` nennen und nicht `Kopie...`
 2. Sie sehen jetzt im Git-Tab, dass die neue Datei als unbekannt (mit gelbem Fragezeichen) da steht. Geben Sie Git Bescheid, dass Sie die Änderungen in der Datei verfolgen möchten (auf Stage klicken).
@@ -74,11 +75,19 @@ Wir können auf ähnliche Art und Weise ein Plot für die Versuchspersonen und S
 
 Erstellen Sie einen Boxplot für `frequency` nach `subject`, wie oben für `frequency` nach `attitude` gemacht wurde (hier ohne Aufteilung nach Geschlecht). Dieser gibt uns einen Blick in die Varianz innerhalb und zwischen Versuchspersonen. 
 
-CODE_BLOCK_HIER
+```{r, fig.width=7, fig.height=4, fig.align='center'}
+ggplot(stimmen) +
+  geom_boxplot(aes(x=subject,y=frequency))
+```
 
 Machen Sie das gleiche für `scenario`. 
 
-CODE_BLOCK_HIER
+# ?????
+```{r, fig.width=7, fig.height=4, fig.align='center'}
+ggplot(stimmen) +
+  geom_boxplot(aes(x=scenario,y=frequency)) + 
+  facet_wrap(~gender)
+```
 
 Gibt es mehr Varianz zwischen Szenarien oder zwischen Versuchspersonen? 
 
@@ -111,8 +120,8 @@ Haben sich die Koeffizienten oder Standardfehler geändert?
 Jetzt berechen wir das Modell mit der Interaktion zwischen `gender` und `attitude`. 
 
 ```{r}
-#model.attitude.int <- CODE_HIER
-#summary(model.attitude.int)
+model.attitude.int <- lmer(frequency ~ gender * attitude + (1|subject) + (1|scenario), data=stimmen, REML=FALSE)
+summary(model.attitude.int)
 ```
 
 Haben sich die Koeffizienten oder Standardfehler geändert?
@@ -120,7 +129,7 @@ Haben sich die Koeffizienten oder Standardfehler geändert?
 Ist die Interaktion signifikant? Wir können uns den Koeffizienten anschauen, aber uns interessiert ob *das Model besser geworden ist*. Das testen wir mit `anova()`
 
 ```{r}
-#anova(model.attitude,model.attitude.int)
+anova(model.attitude,model.attitude.int)
 ```
 
 Hat die Interkation das Modell verbessert? Wenn ein komplexeres Modell nicht signifikant besser als ein einfacheres Modell ist, bleiben wir bei dem einfacheren Modell! 
@@ -138,7 +147,8 @@ Haben sich die Koeffizienten oder Standardfehler (im Vergleich zu `model.attitud
 
 Hat dieses Modell ein signifikante besseres Fit als `model.attitude`? 
 
-CODE_BLOCK_HIER
+#???
+anova(model.attitude,model.attitude.re.slope)
 
 Könnten wir hier ein Intercepts-Only-Modell begründen? 
 
@@ -176,7 +186,7 @@ Wir schauen uns zuerst ein Intercept-Only-Modell an:
 coef(model.attitude)
 ```
 
-Wir sehen, dass das Intercept für jedes `subject` und `scenario` ist, aber die Koeffizienten für die Anstige (`genderM` und `attitudepol`) überall gleich sind und zwar die gleichen, die es als fixe Effekte gibt!  Bei dem Modell mit Anstieg in der RE-Struktur gibt es einen Anstieg für jedes `subject` und `scenario`.
+Wir sehen, dass das Intercept für jedes `subject` und `scenario` ist, aber die Koeffizienten für die Anstiege (`genderM` und `attitudepol`) überall gleich sind und zwar die gleichen, die es als fixe Effekte gibt!  Bei dem Modell mit Anstieg in der RE-Struktur gibt es einen Anstieg für jedes `subject` und `scenario`.
 
 ```{r}
 coef(model.attitude.re.slope)
