@@ -49,6 +49,7 @@ Die Items in dieser Studie sind "Szenarien", also Situationen wo man mehr oder w
 Allerdings merken wir, dass `scenario` falsch kodiert ist, was wir korrigieren müssen:
 
 CODE_BLOCK_HIER
+fact.scenario<-as.factor(stimmen$scenario)
 
 ## Auswirkung der experimentellen Manipulation
 Um einen groben Eindruck zu bekommen, können wir schnell einen Boxplot machen:
@@ -85,8 +86,7 @@ Machen Sie das gleiche für `scenario`.
 # ?????
 ```{r, fig.width=7, fig.height=4, fig.align='center'}
 ggplot(stimmen) +
-  geom_boxplot(aes(x=scenario,y=frequency)) + 
-  facet_wrap(~gender)
+  geom_boxplot(aes(x=fact.scenario,y=frequency))
 ```
 
 Gibt es mehr Varianz zwischen Szenarien oder zwischen Versuchspersonen? 
@@ -147,7 +147,6 @@ Haben sich die Koeffizienten oder Standardfehler (im Vergleich zu `model.attitud
 
 Hat dieses Modell ein signifikante besseres Fit als `model.attitude`? 
 
-#???
 anova(model.attitude,model.attitude.re.slope)
 
 Könnten wir hier ein Intercepts-Only-Modell begründen? 
